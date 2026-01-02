@@ -20,10 +20,12 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       return { success: true, user: userData };
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Login error full response:', error.response?.data);
+      console.error('Validation errors:', error.response?.data?.errors);
+      console.error('Status:', error.response?.status);
       return { 
         success: false, 
-        message: error.response?.data?.message || 'Erreur de connexion' 
+        message: error.response?.data?.message || error.response?.data || 'Erreur de connexion' 
       };
     }
   };

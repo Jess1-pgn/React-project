@@ -105,6 +105,53 @@ const formatorService = {
       throw error.response?.data || error;
     }
   },
+
+  // Enregistrer un formateur externe
+  registerExternalFormator: async (firstName, lastName, email, phone, keywords, bio) => {
+    try {
+      const response = await api.post('/formateurs/external-register', {
+        firstName,
+        lastName,
+        email,
+        phone,
+        keywords,
+        bio,
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
+  // Récupérer les demandes en attente (admin)
+  getPendingApplications: async () => {
+    try {
+      const response = await api.get('/formateurs/applications/pending');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
+  // Approuver une demande (admin)
+  approveApplication: async (applicationId) => {
+    try {
+      const response = await api.put(`/formateurs/applications/${applicationId}/approve`);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
+  // Rejeter une demande (admin)
+  rejectApplication: async (applicationId, reason) => {
+    try {
+      const response = await api.put(`/formateurs/applications/${applicationId}/reject`, { reason });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
 };
 
 export default formatorService;

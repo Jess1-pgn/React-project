@@ -1,11 +1,9 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:8080/api/auth'; // À adapter selon votre backend
+import api from '../config/api';
 
 const authService = {
   // Inscription
   register: async (username, email, password, firstName, lastName, role = 'USER') => {
-    const response = await axios.post(`${API_URL}/register`, {
+    const response = await api.post('/auth/register', {
       username,
       email,
       password,
@@ -18,7 +16,7 @@ const authService = {
 
   // Connexion
   login: async (username, password) => {
-    const response = await axios.post(`${API_URL}/login`, {
+    const response = await api.post('/auth/login', {
       username,
       password,
     });
