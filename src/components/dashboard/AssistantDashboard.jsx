@@ -44,6 +44,18 @@ const AssistantDashboard = () => {
         </div>
 
         <div className="dashboard-card">
+          <h3>🏢 Gestion des entreprises</h3>
+          <p>Ajouter et gérer les entreprises</p>
+          <button onClick={() => navigate('/admin/entreprises')} className="card-button">Gérer</button>
+        </div>
+
+        <div className="dashboard-card">
+          <h3>👥 Gestion des Inscriptions</h3>
+          <p>Voir les inscriptions et assigner les formateurs</p>
+          <button onClick={() => navigate('/admin/participants')} className="card-button">Gérer</button>
+        </div>
+
+        <div className="dashboard-card">
           <h3>📅 Mon Planning</h3>
           <p>Horaires et disponibilités</p>
           <button onClick={() => navigate('/assistant/schedule')} className="card-button">Consulter</button>

@@ -33,14 +33,32 @@ const AdminDashboard = () => {
 
         <div className="dashboard-card">
           <h3>👨‍🏫 Gestion des formateurs</h3>
-          <p>Superviser les formateurs et leurs cours</p>
-          <button onClick={() => navigate('/admin/trainers')} className="card-button">Voir</button>
+          <p>Ajouter et gérer les formateurs et leurs compétences</p>
+          <button onClick={() => navigate('/admin/formateurs')} className="card-button">Gérer</button>
         </div>
 
         <div className="dashboard-card">
           <h3>👨‍💻 Gestion des assistants</h3>
           <p>Gérer les assistants et leurs tâches</p>
           <button onClick={() => navigate('/admin/assistants')} className="card-button">Voir</button>
+        </div>
+
+        <div className="dashboard-card">
+          <h3>📚 Gestion des formations</h3>
+          <p>Créer et gérer les formations publiques</p>
+          <button onClick={() => navigate('/admin/formations')} className="card-button">Gérer</button>
+        </div>
+
+        <div className="dashboard-card">
+          <h3>🏢 Gestion des entreprises</h3>
+          <p>Ajouter et gérer les entreprises partenaires</p>
+          <button onClick={() => navigate('/admin/entreprises')} className="card-button">Gérer</button>
+        </div>
+
+        <div className="dashboard-card">
+          <h3>👥 Gestion des Inscriptions</h3>
+          <p>Voir les inscriptions et assigner les formateurs</p>
+          <button onClick={() => navigate('/admin/participants')} className="card-button">Gérer</button>
         </div>
 
         <div className="dashboard-card">
