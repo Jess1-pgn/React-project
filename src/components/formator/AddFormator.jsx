@@ -75,8 +75,12 @@ const AddFormator = () => {
         navigate('/admin/formateurs');
       }, 2000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors de l\'ajout du formateur');
-      console.error('Erreur:', err);
+      console.error('AddFormator error response:', err.response || err);
+      // Show either server message or full data for debugging
+      setError(
+        err.response?.data?.message ||
+          (err.response?.data ? JSON.stringify(err.response.data) : 'Erreur lors de l\'ajout du formateur')
+      );
     } finally {
       setLoading(false);
     }

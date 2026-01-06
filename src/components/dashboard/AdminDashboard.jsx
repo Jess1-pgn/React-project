@@ -26,27 +26,21 @@ const AdminDashboard = () => {
 
       <div className="dashboard-grid">
         <div className="dashboard-card">
-          <h3>👥 Gestion des utilisateurs</h3>
-          <p>Créer, modifier et supprimer des utilisateurs</p>
-          <button onClick={() => navigate('/admin/users')} className="card-button">Gérer</button>
-        </div>
-
-        <div className="dashboard-card">
-          <h3>👨‍🏫 Gestion des formateurs</h3>
+          <h3>�‍🏫 Gestion des formateurs</h3>
           <p>Ajouter et gérer les formateurs et leurs compétences</p>
           <button onClick={() => navigate('/admin/formateurs')} className="card-button">Gérer</button>
-        </div>
-
-        <div className="dashboard-card">
-          <h3>👨‍💻 Gestion des assistants</h3>
-          <p>Gérer les assistants et leurs tâches</p>
-          <button onClick={() => navigate('/admin/assistants')} className="card-button">Voir</button>
         </div>
 
         <div className="dashboard-card">
           <h3>📚 Gestion des formations</h3>
           <p>Créer et gérer les formations publiques</p>
           <button onClick={() => navigate('/admin/formations')} className="card-button">Gérer</button>
+        </div>
+
+        <div className="dashboard-card">
+          <h3>📅 Planifier une Formation</h3>
+          <p>Assignez formateurs et entreprises aux formations</p>
+          <button onClick={() => navigate('/admin/formations/plan')} className="card-button">Planifier</button>
         </div>
 
         <div className="dashboard-card">
@@ -62,9 +56,15 @@ const AdminDashboard = () => {
         </div>
 
         <div className="dashboard-card">
+          <h3>⭐ Évaluations</h3>
+          <p>Consulter les évaluations des formations</p>
+          <button onClick={() => navigate('/admin/evaluations')} className="card-button">Consulter</button>
+        </div>
+
+        <div className="dashboard-card">
           <h3>📊 Statistiques</h3>
           <p>Vue d'ensemble du système</p>
-          <button onClick={() => navigate('/admin/statistics')} className="card-button">Analyser</button>
+          <button onClick={() => navigate('/admin/statistiques-formations')} className="card-button">Analyser</button>
         </div>
 
         <div className="dashboard-card">
@@ -77,6 +77,12 @@ const AdminDashboard = () => {
           <h3>📝 Logs</h3>
           <p>Historique des activités</p>
           <button onClick={() => navigate('/admin/logs')} className="card-button">Consulter</button>
+        </div>
+
+        <div className="dashboard-card">
+          <h3>📋 Demandes de formateurs</h3>
+          <p>Gérer les demandes d'inscription des formateurs externes</p>
+          <button onClick={() => navigate('/admin/formateurs-applications')} className="card-button">Examiner</button>
         </div>
       </div>
     </div>

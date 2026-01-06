@@ -15,10 +15,17 @@ const FormatorApplicationsList = () => {
 
   const loadApplications = async () => {
     try {
-      const data = await formatorService.getPendingApplications();
-      setApplications(data || []);
+      const response = await formatorService.getPendingApplications();
+      
+      // Normaliser la réponse (support {message, data} ou tableau direct)
+      const data = Array.isArray(response) 
+        ? response 
+        : response?.data || [];
+      
+      setApplications(data);
     } catch (error) {
       console.error('Erreur:', error);
+      setApplications([]);
     } finally {
       setLoading(false);
     }
@@ -52,15 +59,18 @@ const FormatorApplicationsList = () => {
 
   if (loading) return <div className="loading">Chargement...</div>;
 
+  // Vérifier que applications est un tableau avant d'utiliser .map
+  const applicationsArray = Array.isArray(applications) ? applications : [];
+
   return (
     <div className="formator-applications-container">
-      <h2>📋 Demandes d'inscription - Formateurs externes</h2>
+      <h2>Demandes d'inscription - Formateurs externes</h2>
       
-      {applications.length === 0 ? (
+      {applicationsArray.length === 0 ? (
         <div className="no-applications">Aucune demande en attente</div>
       ) : (
         <div className="applications-list">
-          {applications.map(app => (
+          {applicationsArray.map(app => (
             <div key={app.id} className="application-card">
               <div className="app-header">
                 <h3>{app.firstName} {app.lastName}</h3>

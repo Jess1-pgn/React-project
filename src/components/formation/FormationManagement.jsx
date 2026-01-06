@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import api from '../../config/api';
 import './FormationManagement.css';
 
 const FormationManagement = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [formations, setFormations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -19,7 +21,14 @@ const FormationManagement = () => {
     try {
       setLoading(true);
       const response = await api.get('/formations');
-      setFormations(response.data);
+      
+      // Si c'est un formateur, filtrer seulement ses formations
+      const isFormateur = user?.role?.toUpperCase() === 'FORMATEUR';
+      const formations = isFormateur 
+        ? response.data.filter(f => f.formatorId === user?.id)
+        : response.data;
+      
+      setFormations(formations);
       setError('');
     } catch (err) {
       setError('Erreur lors du chargement des formations');
@@ -75,15 +84,30 @@ const FormationManagement = () => {
     <div className="formation-management">
       <div className="management-header">
         <div>
-          <h1>📚 Gestion des formations</h1>
-          <p>Créez et gérez les formations publiques</p>
+          <h1>{user?.role?.toUpperCase() === 'FORMATEUR' ? 'Mes Formations' : 'Gestion des formations'}</h1>
+          <p>{user?.role?.toUpperCase() === 'FORMATEUR' ? 'Gérez vos formations' : 'Créez et gérez les formations publiques'}</p>
         </div>
-        <button
-          onClick={() => navigate('/admin/formations/add')}
-          className="add-formation-btn"
-        >
-          ➕ Ajouter une formation
-        </button>
+        <div className="header-actions">
+          <button
+            onClick={() => navigate('/admin/dashboard')}
+            className="back-dashboard-btn"
+            title="Retour au tableau de bord"
+          >
+            ← Tableau de bord
+          </button>
+
+          <button
+            onClick={() => {
+              const path = user?.role?.toLowerCase() === 'formateur'
+                ? '/formateur/formations/add'
+                : '/admin/formations/add';
+              navigate(path);
+            }}
+            className="add-formation-btn"
+          >
+            ➕ Ajouter une formation
+          </button>
+        </div>
       </div>
 
       {error && <div className="error-message">{error}</div>}
@@ -184,13 +208,23 @@ const FormationManagement = () => {
 
                 <div className="formation-actions">
                   <button
-                    onClick={() => navigate(`/admin/formations/edit/${formation.id}`)}
+                    onClick={() => {
+                      const editPath = user?.role?.toLowerCase() === 'formateur'
+                        ? `/formateur/formations/edit/${formation.id}`
+                        : `/admin/formations/edit/${formation.id}`;
+                      navigate(editPath);
+                    }}
                     className="edit-btn"
                   >
                     ✏️ Modifier
                   </button>
                   <button
-                    onClick={() => navigate(`/admin/formations/${formation.id}`)}
+                    onClick={() => {
+                      const detailsPath = user?.role?.toLowerCase() === 'formateur'
+                        ? `/formateur/formations/details/${formation.id}`
+                        : `/admin/formations/${formation.id}`;
+                      navigate(detailsPath);
+                    }}
                     className="view-btn"
                   >
                     👁️ Voir détails

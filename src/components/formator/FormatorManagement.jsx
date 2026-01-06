@@ -20,11 +20,15 @@ const FormatorManagement = () => {
     try {
       setLoading(true);
       const response = await api.get('/formateurs');
-      setFormators(response.data);
+
+      // Support both shapes: { message, data: [...] } or [...]
+      const payload = response.data && response.data.data ? response.data.data : response.data;
+      const formatorsArray = Array.isArray(payload) ? payload : [];
+      setFormators(formatorsArray);
 
       // Extraire tous les skills uniques
       const skills = new Set();
-      response.data.forEach((formator) => {
+      formatorsArray.forEach((formator) => {
         formator.specializations?.forEach((skill) => skills.add(skill));
       });
       setAllSkills(Array.from(skills).sort());
@@ -41,7 +45,7 @@ const FormatorManagement = () => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer ce formateur ?')) {
       try {
         await api.delete(`/formateurs/${id}`);
-        setFormators(formators.filter((f) => f.id !== id));
+        setFormators((prev) => prev.filter((f) => f.id !== id));
       } catch (err) {
         setError('Erreur lors de la suppression');
         console.error('Erreur:', err);
@@ -71,12 +75,22 @@ const FormatorManagement = () => {
           <h1>👨‍🏫 Gestion des formateurs</h1>
           <p>Créez et gérez les formateurs</p>
         </div>
-        <button
-          onClick={() => navigate('/admin/formateurs/add')}
-          className="add-formator-btn"
-        >
-          ➕ Ajouter un formateur
-        </button>
+        <div className="header-actions">
+          <button
+            onClick={() => navigate('/admin/dashboard')}
+            className="back-dashboard-btn"
+            title="Retour au tableau de bord"
+          >
+            ← Tableau de bord
+          </button>
+
+          <button
+            onClick={() => navigate('/admin/formateurs/add')}
+            className="add-formator-btn"
+          >
+            ➕ Ajouter un formateur
+          </button>
+        </div>
       </div>
 
       {error && <div className="error-message">{error}</div>}

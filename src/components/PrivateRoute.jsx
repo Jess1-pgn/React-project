@@ -9,7 +9,7 @@ const PrivateRoute = ({ children, allowedRoles }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(role)) {
+  if (allowedRoles && !allowedRoles.includes(role?.toUpperCase())) {
     return <Navigate to="/unauthorized" replace />;
   }
 

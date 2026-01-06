@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../Backup"
+		},
+		{
+			"path": "../../../../mon-backend"
+		}
+	],
+	"settings": {}
+}

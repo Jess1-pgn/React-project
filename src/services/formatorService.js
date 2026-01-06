@@ -4,7 +4,7 @@ const formatorService = {
   // Récupérer tous les formateurs
   getAllFormators: async () => {
     try {
-      const response = await api.get('/formateurs');
+      const response = await api.get('/admin/formateurs');
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -14,7 +14,7 @@ const formatorService = {
   // Récupérer un formateur par ID
   getFormatorById: async (id) => {
     try {
-      const response = await api.get(`/formateurs/${id}`);
+      const response = await api.get(`/admin/formateurs/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -24,7 +24,7 @@ const formatorService = {
   // Créer un nouveau formateur
   createFormator: async (formatorData) => {
     try {
-      const response = await api.post('/formateurs', formatorData);
+      const response = await api.post('/admin/formateurs', formatorData);
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -34,7 +34,7 @@ const formatorService = {
   // Mettre à jour un formateur
   updateFormator: async (id, formatorData) => {
     try {
-      const response = await api.put(`/formateurs/${id}`, formatorData);
+      const response = await api.put(`/admin/formateurs/${id}`, formatorData);
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -44,7 +44,7 @@ const formatorService = {
   // Supprimer un formateur
   deleteFormator: async (id) => {
     try {
-      const response = await api.delete(`/formateurs/${id}`);
+      const response = await api.delete(`/admin/formateurs/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -54,7 +54,7 @@ const formatorService = {
   // Obtenir les formateurs par compétence
   getFormatorsBySkill: async (skill) => {
     try {
-      const response = await api.get(`/formateurs/skill/${skill}`);
+      const response = await api.get(`/admin/formateurs/skill/${skill}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -64,7 +64,7 @@ const formatorService = {
   // Obtenir toutes les compétences uniques
   getAllSkills: async () => {
     try {
-      const response = await api.get('/formateurs/skills/all');
+      const response = await api.get('/admin/formateurs/skills/all');
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -75,7 +75,7 @@ const formatorService = {
   assignToFormation: async (formatorId, formationId) => {
     try {
       const response = await api.post(
-        `/formateurs/${formatorId}/formations`,
+        `/admin/formateurs/${formatorId}/formations`,
         { formationId }
       );
       return response.data;
@@ -88,7 +88,7 @@ const formatorService = {
   removeFromFormation: async (formatorId, formationId) => {
     try {
       const response = await api.delete(
-        `/formateurs/${formatorId}/formations/${formationId}`
+        `/admin/formateurs/${formatorId}/formations/${formationId}`
       );
       return response.data;
     } catch (error) {
@@ -99,7 +99,7 @@ const formatorService = {
   // Obtenir les formations d'un formateur
   getFormatorFormations: async (formatorId) => {
     try {
-      const response = await api.get(`/formateurs/${formatorId}/formations`);
+      const response = await api.get(`/admin/formateurs/${formatorId}/formations`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -109,7 +109,7 @@ const formatorService = {
   // Enregistrer un formateur externe
   registerExternalFormator: async (firstName, lastName, email, phone, keywords, bio) => {
     try {
-      const response = await api.post('/formateurs/external-register', {
+      const response = await api.post('/admin/formateurs/external-register', {
         firstName,
         lastName,
         email,
@@ -126,7 +126,7 @@ const formatorService = {
   // Récupérer les demandes en attente (admin)
   getPendingApplications: async () => {
     try {
-      const response = await api.get('/formateurs/applications/pending');
+      const response = await api.get('/admin/formateurs/applications/pending');
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -136,7 +136,7 @@ const formatorService = {
   // Approuver une demande (admin)
   approveApplication: async (applicationId) => {
     try {
-      const response = await api.put(`/formateurs/applications/${applicationId}/approve`);
+      const response = await api.put(`/admin/formateurs/applications/${applicationId}/approve`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -146,7 +146,7 @@ const formatorService = {
   // Rejeter une demande (admin)
   rejectApplication: async (applicationId, reason) => {
     try {
-      const response = await api.put(`/formateurs/applications/${applicationId}/reject`, { reason });
+      const response = await api.put(`/admin/formateurs/applications/${applicationId}/reject`, { reason });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;

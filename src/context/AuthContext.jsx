@@ -15,17 +15,23 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
+      console.log('🔐 AuthContext.login called with:', { username, password });
       const userData = await authService.login(username, password);
       // userData contains: token, type, id, username, email, role
+      console.log('✅ AuthContext received userData:', userData);
       setUser(userData);
       return { success: true, user: userData };
     } catch (error) {
-      console.error('Login error full response:', error.response?.data);
-      console.error('Validation errors:', error.response?.data?.errors);
-      console.error('Status:', error.response?.status);
+      console.error('❌ Login error full response:', error.response?.data);
+      console.error('❌ Validation errors detail:', JSON.stringify(error.response?.data?.errors, null, 2));
+      console.error('❌ Status:', error.response?.status);
+      const errorMessage = error.response?.data?.errors?.[0]?.msg || 
+                          error.response?.data?.message || 
+                          'Erreur de connexion';
+      console.error('❌ Final error message:', errorMessage);
       return { 
         success: false, 
-        message: error.response?.data?.message || error.response?.data || 'Erreur de connexion' 
+        message: errorMessage
       };
     }
   };

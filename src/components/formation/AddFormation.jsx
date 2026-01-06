@@ -23,6 +23,7 @@ const AddFormation = () => {
     city: '',
     sector: '',
     startDate: '',
+    endDate: '',
   });
 
   const [objectiveInput, setObjectiveInput] = useState('');
@@ -97,7 +98,8 @@ const AddFormation = () => {
         ...formData,
         hours: parseInt(formData.hours),
         cost: parseFloat(formData.cost),
-        maxParticipants: parseInt(formData.maxParticipants) || null,
+        maxParticipants: parseInt(formData.maxParticipants) || 30,
+        endDate: formData.endDate || formData.startDate,
       });
 
       setSuccessMessage('Formation ajoutée avec succès!');
@@ -265,7 +267,21 @@ const AddFormation = () => {
                 onChange={handleInputChange}
               />
             </div>
+
+            <div className="form-group">
+              <label htmlFor="endDate">Date de fin</label>
+              <input
+                type="date"
+                id="endDate"
+                name="endDate"
+                value={formData.endDate}
+                onChange={handleInputChange}
+              />
+            </div>
+
           </div>
+
+        </fieldset>
 
         {/* Objectifs */}
         <fieldset className="form-section">

@@ -2,24 +2,20 @@ import api from '../config/api';
 
 const authService = {
   // Inscription
-  register: async (username, email, password, firstName, lastName, role = 'USER') => {
-    const response = await api.post('/auth/register', {
-      username,
-      email,
-      password,
-      firstName,
-      lastName,
-      role,
-    });
+  register: async (userData) => {
+    const response = await api.post('/auth/register', userData);
+    if (response.data.token) {
+      localStorage.setItem('user', JSON.stringify(response.data));
+    }
     return response.data;
   },
 
   // Connexion
   login: async (username, password) => {
-    const response = await api.post('/auth/login', {
-      username,
-      password,
-    });
+    const payload = { username, password };
+    console.log('📤 Login payload:', payload);
+    const response = await api.post('/auth/login', payload);
+    console.log('✅ Login response:', response.data);
     if (response.data.token) {
       localStorage.setItem('user', JSON.stringify(response.data));
     }

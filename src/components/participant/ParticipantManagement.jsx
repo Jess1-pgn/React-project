@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import participantService from '../../services/participantService';
 import formationService from '../../services/formationService';
 import formatorService from '../../services/formatorService';
@@ -7,6 +8,7 @@ import './ParticipantManagement.css';
 
 const ParticipantManagement = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [groups, setGroups] = useState([]);
   const [formators, setFormators] = useState([]);
@@ -27,11 +29,23 @@ const ParticipantManagement = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [groupsData, formationsData, formatorsData] = await Promise.all([
+      const [groupsResponse, formationsResponse, formatorsResponse] = await Promise.all([
         participantService.getGroups(),
         formationService.getAllFormations(),
         formatorService.getAllFormators()
       ]);
+
+      // Normaliser les réponses (support {message, data} ou tableau direct)
+      const normalizeArray = (res) => {
+        if (!res) return [];
+        if (Array.isArray(res)) return res;
+        if (Array.isArray(res.data)) return res.data;
+        return res.data?.data || [];
+      };
+
+      const groupsData = normalizeArray(groupsResponse);
+      const formationsData = normalizeArray(formationsResponse);
+      const formatorsData = normalizeArray(formatorsResponse);
 
       // Enrichir les groupes avec les infos de formation
       const enrichedGroups = await Promise.all(
@@ -153,6 +167,20 @@ const ParticipantManagement = () => {
   const filteredGroups = filterGroups();
   const totalParticipants = groups.reduce((sum, group) => sum + (group.participants?.length || 0), 0);
 
+  // Déterminer la route de retour selon le rôle
+  const getDashboardRoute = () => {
+    if (!user) return '/admin';
+    switch (user.role) {
+      case 'assistant':
+        return '/assistant/dashboard';
+      case 'formateur':
+        return '/formateur/dashboard';
+      case 'admin':
+      default:
+        return '/admin';
+    }
+  };
+
   if (loading && groups.length === 0) {
     return <div className="participants-container loading">Chargement des inscriptions...</div>;
   }
@@ -161,8 +189,19 @@ const ParticipantManagement = () => {
     <div className="participants-container">
       {/* En-tête */}
       <div className="participants-header">
-        <h1>👥 Gestion des Inscriptions</h1>
-        <p>Gérez les inscriptions aux formations et assignez les formateurs</p>
+        <div className="header-actions">
+          <div className="header-text">
+            <h1>Gestion des Inscriptions</h1>
+            <p>Gérez les inscriptions aux formations et assignez les formateurs</p>
+          </div>
+          <button
+            onClick={() => navigate(getDashboardRoute())}
+            className="back-dashboard-btn"
+            type="button"
+          >
+            ← Retour au tableau de bord
+          </button>
+        </div>
       </div>
 
       {/* Messages */}

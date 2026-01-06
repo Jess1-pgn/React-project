@@ -53,8 +53,8 @@ const FormationDetails = () => {
       <div className="formation-details">
         <div className="error-container">
           <h2>{error || 'Formation non trouvée'}</h2>
-          <button onClick={() => navigate('/admin/formations')} className="back-btn">
-            ← Retour aux formations
+          <button onClick={() => navigate(-1)} className="back-btn">
+            ← Retour
           </button>
         </div>
       </div>
@@ -63,8 +63,8 @@ const FormationDetails = () => {
 
   return (
     <div className="formation-details">
-      <button onClick={() => navigate('/admin/formations')} className="back-link">
-        ← Retour aux formations
+      <button onClick={() => navigate(-1)} className="back-link">
+        ← Retour
       </button>
 
       <div className="details-container">
@@ -153,7 +153,7 @@ const FormationDetails = () => {
               ✏️ Modifier
             </button>
             <button
-              onClick={() => navigate('/admin/formations')}
+              onClick={() => navigate(-1)}
               className="back-btn"
             >
               ← Retour

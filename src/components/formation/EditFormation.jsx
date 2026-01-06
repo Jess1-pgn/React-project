@@ -24,6 +24,7 @@ const EditFormation = () => {
     sector: '',
     city: '',
     startDate: '',
+    endDate: '',
     imageUrl: '',
   });
 
@@ -50,6 +51,7 @@ const EditFormation = () => {
         sector: response.data.sector || '',
         city: response.data.city || '',
         startDate: response.data.startDate || '',
+        endDate: response.data.endDate || '',
         imageUrl: response.data.imageUrl || '',
       });
       setError('');
@@ -129,7 +131,7 @@ const EditFormation = () => {
         ...formData,
         hours: parseInt(formData.hours),
         cost: parseFloat(formData.cost),
-        maxParticipants: parseInt(formData.maxParticipants) || null,
+        maxParticipants: parseInt(formData.maxParticipants) || 30,
       });
 
       setSuccessMessage('Formation mise à jour avec succès!');
@@ -309,6 +311,7 @@ const EditFormation = () => {
               />
             </div>
           </div>
+        </fieldset>
 
         {/* Objectifs */}
         <fieldset className="form-section">

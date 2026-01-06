@@ -20,11 +20,17 @@ const EntrepriseManagement = () => {
     try {
       setLoading(true);
       const response = await api.get('/entreprises');
-      setEntreprises(response.data);
+      
+      // Normaliser la réponse (support {message, data} ou tableau direct)
+      const data = Array.isArray(response.data) 
+        ? response.data 
+        : response.data?.data || [];
+      
+      setEntreprises(data);
 
       // Extraire tous les secteurs uniques
       const sectors = new Set();
-      response.data.forEach((entreprise) => {
+      data.forEach((entreprise) => {
         if (entreprise.sector) sectors.add(entreprise.sector);
       });
       setAllSectors(Array.from(sectors).sort());
@@ -49,30 +55,43 @@ const EntrepriseManagement = () => {
     }
   };
 
-  const filteredEntreprises = entreprises.filter((entreprise) => {
-    const matchesSearch =
-      entreprise.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      entreprise.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      entreprise.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredEntreprises = Array.isArray(entreprises) 
+    ? entreprises.filter((entreprise) => {
+        const matchesSearch =
+          entreprise.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          entreprise.city?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          entreprise.email?.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesSector = !filterSector || entreprise.sector === filterSector;
+        const matchesSector = !filterSector || entreprise.sector === filterSector;
 
-    return matchesSearch && matchesSector;
-  });
+        return matchesSearch && matchesSector;
+      })
+    : [];
 
   return (
     <div className="entreprise-management">
       <div className="management-header">
-        <div>
-          <h1>🏢 Gestion des entreprises</h1>
-          <p>Créez et gérez la liste des entreprises</p>
+        <div className="header-actions">
+          <div className="header-text">
+            <h1>Gestion des entreprises</h1>
+            <p>Créez et gérez la liste des entreprises</p>
+          </div>
+          <div className="header-buttons">
+            <button
+              onClick={() => navigate('/admin')}
+              className="back-dashboard-btn"
+              type="button"
+            >
+              ← Retour au tableau de bord
+            </button>
+            <button
+              onClick={() => navigate('/admin/entreprises/add')}
+              className="add-entreprise-btn"
+            >
+              ➕ Ajouter une entreprise
+            </button>
+          </div>
         </div>
-        <button
-          onClick={() => navigate('/admin/entreprises/add')}
-          className="add-entreprise-btn"
-        >
-          ➕ Ajouter une entreprise
-        </button>
       </div>
 
       {error && <div className="error-message">{error}</div>}

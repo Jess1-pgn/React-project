@@ -1,50 +1,77 @@
 .entreprise-management {
-  padding: 40px 20px;
-  background: #f5f7fa;
+  padding: 32px 24px;
+  background: #fafafa;
   min-height: 100vh;
 }
 
 .management-header {
+  background: #ffffff;
+  padding: 24px 32px;
+  border-radius: 12px;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 32px;
+}
+
+.header-actions {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 40px;
-  border-radius: 15px;
-  color: white;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  align-items: flex-start;
+  width: 100%;
 }
 
-.management-header h1 {
-  font-size: 2.5rem;
-  margin: 0 0 10px 0;
-  font-weight: 700;
+.header-text h1 {
+  font-size: 1.75rem;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  color: #111827;
 }
 
-.management-header p {
-  font-size: 1.1rem;
-  opacity: 0.9;
+.header-text p {
+  font-size: 1rem;
+  color: #6b7280;
   margin: 0;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.back-dashboard-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.back-dashboard-btn:hover {
+  background: #e5e7eb;
+}
+
 .add-entreprise-btn {
-  padding: 12px 30px;
-  background: white;
-  color: #667eea;
+  padding: 12px 20px;
+  background: #3b82f6;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
   white-space: nowrap;
 }
 
 .add-entreprise-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  background: #2563eb;
 }
 
 .filters-section {

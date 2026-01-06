@@ -21,17 +21,17 @@ const Login = () => {
     const result = await login(username, password);
 
     if (result.success) {
-      // Redirection selon le rôle - utiliser le rôle du résultat
-      const userRole = result.user?.role;
+      // Redirection selon le rôle - normaliser en minuscules
+      const userRole = result.user?.role?.toLowerCase();
       switch (userRole) {
-        case 'ADMIN':
-          navigate('/admin');
+        case 'admin':
+          navigate('/admin/dashboard');
           break;
-        case 'FORMATEUR':
-          navigate('/formateur');
+        case 'formateur':
+          navigate('/formateur/dashboard');
           break;
-        case 'ASSISTANT': 
-          navigate('/assistant');
+        case 'assistant': 
+          navigate('/assistant/dashboard');
           break;
         default:
           navigate('/');
@@ -84,6 +84,10 @@ const Login = () => {
           <p>👨‍💼 Admin:  admin / admin123</p>
           <p>👨‍🏫 Formateur: formateur / form123</p>
           <p>👨‍💻 Assistant: assistant / assist123</p>
+        </div>
+
+        <div className="register-link">
+          <p>Pas encore de compte ? <button className="link-btn" onClick={() => navigate('/register')}>S'inscrire</button></p>
         </div>
       </div>
     </div>

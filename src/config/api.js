@@ -2,7 +2,8 @@ import axios from 'axios';
 import authService from '../services/authService';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  // Use relative `/api` so Vite dev proxy can forward requests to backend
+  baseURL: '/api',
   headers: {
     'Content-Type': 'application/json',
   },

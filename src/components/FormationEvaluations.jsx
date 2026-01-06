@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import evaluationService from '../services/evaluationService';
-import '../components/Evaluation.css';
+import './FormationEvaluations.css';
 
 const FormationEvaluations = ({ formationId, formatorName }) => {
   const [stats, setStats] = useState(null);
@@ -74,15 +74,15 @@ const FormationEvaluations = ({ formationId, formatorName }) => {
       {evaluations.length > 0 && (
         <div className="evaluations-list">
           <h4>Commentaires des participants</h4>
-          {evaluations.map((eval, idx) => (
+          {evaluations.map((evaluation, idx) => (
             <div key={idx} className="evaluation-item">
               <div className="evaluation-header">
-                <span className="participant-name">{eval.participantName || 'Participant'}</span>
+                <span className="participant-name">{evaluation.participantName || 'Participant'}</span>
                 <span className="evaluation-date">
-                  {new Date(eval.createdAt).toLocaleDateString('fr-FR')}
+                  {new Date(evaluation.createdAt).toLocaleDateString('fr-FR')}
                 </span>
               </div>
-              {eval.comment && <p className="evaluation-comment">{eval.comment}</p>}
+              {evaluation.comment && <p className="evaluation-comment">{evaluation.comment}</p>}
             </div>
           ))}
         </div>
